@@ -34,68 +34,46 @@ class Clean_Up(tk.Tk):
         
         quit_button = ttk.Button(self, text="Quit", command=self.destroy)
         quit_button.grid(row=6, column=0, padx=10, pady=(10, 10))
-        # text_label.columnconfigure(0, weight=1)
-        # text_label.rowconfigure(0, weight=0)
+
     def Begin_Scan(self):
-        self.pict = []
-        self.movies = []
-        self.music = []
-        self.documents = []
-        for i in self.files:
-            if ".jpg" in i:
-                self.pict.append(i)
-                self.Pictures(i)
-            elif ".jpeg" in i:
-                self.pict.append(i)
-                self.Pictures(i)
-            elif ".png" in i:
-                self.pict.append(i)
-                self.Pictures(i)
-            elif ".mp4" in i:
-                self.movies.append(i) 
-                self.Videos(i)
-            elif ".mkv" in i:
-                self.movies.append(i)
-                self.Videos(i)
-            elif ".opus" in i:
-                self.music.append(i)
-                self.Music(i)
-            elif ".mp3" in i:
-                self.music.append(i)
-                self.Music(i)
-            elif ".docx" in i:
-                self.documents.append(i)
-                self.Documents(i)
-            elif ".pdf" in i:
-                self.documents.append(i)
-                self.Documents(i)
-                
-        # print(i, "Worked", self.pict)        
+        self.pict = ['.jpg', '.jpeg', '.gif', '.png']
+        self.movies = ['.mp4', '.mkv', 'webm']
+        self.music = ['.mp3', '.opus', '.ogg', '.m4a', '.wav']
+        self.documents = ['.docx', '.pdf', '.txt']
+        try:
+            for i in self.files:
+                if i.endswith( tuple(self.pict)):
+                    self.Pictures(i)
+                    pictures_label = ttk.Label(self, text="Moved pictures " + i)  
+                    pictures_label.grid(row=2, column=0)
+                elif i.endswith( tuple(self.movies)):
+                    self.Videos(i)
+                    mov_video = ttk.Label(self, text="Moved video " + i)
+                    mov_video.grid(row=3, column=0)
+                elif i.endswith( tuple(self.music)):
+                    self.Music(i)
+                    mov_aud = ttk.Label(self, text="Moved audio " + i)  
+                    mov_aud.grid(row=4, column=0)
+                elif i.endswith( tuple(self.documents)): 
+                    self.Documents(i)
+                    mov_doc = ttk.Label(self, text="Moved documents " + i)
+                    mov_doc.grid(row=5, column=0)
+                else:
+                    if i != i.endswith( tuple(self.pict)) and i != i.endswith(tuple(self.movies)) \
+                                        and i != i.endswith(tuple(self.music)) and i != i.endswith(tuple(self.documents)):
+                        nothing_to_do = ttk.Label(self, text="Nothing to do!")
+                        nothing_to_do.grid(row=7, column=0)
+        except shutil.Error as e:
+            horribly_awry = ttk.Label(self, text=e)
+            horribly_awry.grid(row=8, column=0)        
     def Pictures(self, i):
-        pictures_label = ttk.Label(self, text="Moved pictures")
-        pictures_label.grid(row=2, column=0)
-#        pictures_entry = ttk.Entry(self, width=20, textvariable=self.pict) 
-#        pictures_entry.grid(row=1, column=1)
         shutil.move(i, os.path.join(self.source, 'Pictures'))
-#        print("Moved pictures")
-        #return pict_have_moved
     def Videos(self, i):
         shutil.move(i, os.path.join(self.source, 'Videos'))
-        mov_video = ttk.Label(self, text="Moved video")
-        mov_video.grid(row=3, column=0)
-      #  print("Moved video")
-        #return
     def Music(self, i):
         shutil.move(i, os.path.join(self.source, 'Music'))
-        mov_aud = ttk.Label(self, text="Moved audio")
-        mov_aud.grid(row=4, column=0)
-     #   print("Moved audio")
-        #return
     def Documents(self, i):
         shutil.move(i, os.path.join(self.source, 'Documents'))
-        mov_doc = ttk.Label(self, text="Moved documents")
-        mov_doc.grid(row=5, column=0)
-    #   print("Moved documents")
         
 
 root = Clean_Up()
