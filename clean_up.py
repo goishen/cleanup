@@ -14,7 +14,6 @@ import os
 import shutil
 import tkinter.font as font
 
-
 class Clean_Up(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -39,33 +38,41 @@ class Clean_Up(tk.Tk):
         self.pict = ['.jpg', '.jpeg', '.gif', '.png']
         self.movies = ['.mp4', '.mkv', 'webm']
         self.music = ['.mp3', '.opus', '.ogg', '.m4a', '.wav']
-        self.documents = ['.docx', '.pdf', '.txt']
+        self.documents = ['.docx', '.pdf', '.txt', 'odt']
+        moved_files = 0
         try:
             for i in self.files:
                 if i.endswith( tuple(self.pict)):
                     self.Pictures(i)
-                    pictures_label = ttk.Label(self, text="Moved pictures " + i)  
-                    pictures_label.grid(row=2, column=0)
+                    pictures_label = ttk.Label(self, text="Pictures : " + i)  
+                    pictures_label.grid(row=2, column=0, sticky='W')
+                    moved_files += 1
                 elif i.endswith( tuple(self.movies)):
                     self.Videos(i)
                     mov_video = ttk.Label(self, text="Moved video " + i)
                     mov_video.grid(row=3, column=0)
+                    moved_files += 1
                 elif i.endswith( tuple(self.music)):
                     self.Music(i)
                     mov_aud = ttk.Label(self, text="Moved audio " + i)  
                     mov_aud.grid(row=4, column=0)
+                    moved_files += 1
                 elif i.endswith( tuple(self.documents)): 
                     self.Documents(i)
                     mov_doc = ttk.Label(self, text="Moved documents " + i)
                     mov_doc.grid(row=5, column=0)
-                else:
-                    if i != i.endswith( tuple(self.pict)) and i != i.endswith(tuple(self.movies)) \
-                                        and i != i.endswith(tuple(self.music)) and i != i.endswith(tuple(self.documents)):
-                        nothing_to_do = ttk.Label(self, text="Nothing to do!")
-                        nothing_to_do.grid(row=7, column=0)
+                    moved_files += 1
         except shutil.Error as e:
             horribly_awry = ttk.Label(self, text=e)
             horribly_awry.grid(row=8, column=0)        
+
+        if moved_files == 0:
+            nothing_to_do = ttk.Label(self, text="Nothing to do!")
+            nothing_to_do.grid(row=3, column=0)
+        else:
+            files_have_moved = ttk.Label(self, text="Moved!")
+            files_have_moved.grid(row=7, column=0)
+
     def Pictures(self, i):
         shutil.move(i, os.path.join(self.source, 'Pictures'))
     def Videos(self, i):
@@ -78,7 +85,7 @@ class Clean_Up(tk.Tk):
 
 root = Clean_Up()
 
-font.nametofont("TkDefaultFont").configure(size=12)
+font.nametofont("TkDefaultFont").configure(size=14)
 
 root.mainloop()
 
