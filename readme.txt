@@ -14,4 +14,10 @@ It was a lot harder than it looks.
 
 Well, for me, at least.   
 
+v .03  
+
+I finally added code that would take in arguments (i, in this case), and put them out to the screen in the order in which they appeared.  Still have got to implement a feature that will delete the previous Label.  In other words, the one label "Not gonna get us.opus" is shorter than "Simon and Garfunkel - America.opus", so, then you will end up with "Not gonna get us.opus - America.opus".   Something like that.
+
+And the buttons and the text aren't centered, but that's prettifying.  
+
 

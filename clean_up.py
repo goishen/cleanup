@@ -44,23 +44,23 @@ class Clean_Up(tk.Tk):
             for i in self.files:
                 if i.endswith( tuple(self.pict)):
                     self.Pictures(i)
-                    pictures_label = ttk.Label(self, text="Pictures : " + i)  
-                    pictures_label.grid(row=2, column=0, sticky='W')
+                    pictures_label = ttk.Label(self, text="Pictures : ")  
+                    pictures_label.grid(row=2, column=0, sticky='W', padx=5, pady=(5, 5))
                     moved_files += 1
                 elif i.endswith( tuple(self.movies)):
                     self.Videos(i)
-                    mov_video = ttk.Label(self, text="Moved video " + i)
-                    mov_video.grid(row=3, column=0)
+                    mov_video = ttk.Label(self, text="Moved video : ")
+                    mov_video.grid(row=3, column=0, sticky='W', padx=5, pady=(5, 5))
                     moved_files += 1
                 elif i.endswith( tuple(self.music)):
                     self.Music(i)
-                    mov_aud = ttk.Label(self, text="Moved audio " + i)  
-                    mov_aud.grid(row=4, column=0)
+                    mov_aud = ttk.Label(self, text="Moved audio : " )  
+                    mov_aud.grid(row=4, column=0, sticky='W', padx=5, pady=(5, 5))
                     moved_files += 1
                 elif i.endswith( tuple(self.documents)): 
                     self.Documents(i)
-                    mov_doc = ttk.Label(self, text="Moved documents " + i)
-                    mov_doc.grid(row=5, column=0)
+                    mov_doc = ttk.Label(self, text="Moved documents : " )
+                    mov_doc.grid(row=5, column=0, sticky='W', padx=5, pady=(5, 5))
                     moved_files += 1
         except shutil.Error as e:
             horribly_awry = ttk.Label(self, text=e)
@@ -75,13 +75,20 @@ class Clean_Up(tk.Tk):
 
     def Pictures(self, i):
         shutil.move(i, os.path.join(self.source, 'Pictures'))
+        pics_have_moved = ttk.Label(self, text=i)
+        pics_have_moved.grid(row=2, column=1, sticky='E', padx=5, pady=(5, 5))
     def Videos(self, i):
         shutil.move(i, os.path.join(self.source, 'Videos'))
+        movies_have_moved = ttk.Label(self, text=i)
+        movies_have_moved.grid(row=3, column=1, sticky='E', padx=5, pady=(5, 5))
     def Music(self, i):
         shutil.move(i, os.path.join(self.source, 'Music'))
+        music_have_moved = ttk.Label(self, text=i)
+        music_have_moved.grid(row=4, column=1, sticky='E', padx=5, pady=(5, 5))
     def Documents(self, i):
         shutil.move(i, os.path.join(self.source, 'Documents'))
-        
+        docs_have_moved = ttk.Label(self, text=i)
+        docs_have_moved.grid(row=5, column=1, sticky='E', padx=5, pady=(5, 5))
 
 root = Clean_Up()
 
